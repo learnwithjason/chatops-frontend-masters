@@ -18,7 +18,7 @@ TKTK
   - How to test slash commands locally (Netlify Dev `--live`)
 - Displaying a modal for user input
 - Handling user input
-- Integrate with a third-party tool (e.g. Notion)
+- Integrate with a third-party tool (Notion)
   - Create a Notion app https://www.notion.so/my-integrations
   - Send data from Notion to Slack
   - Send user input from Slack to Notion
