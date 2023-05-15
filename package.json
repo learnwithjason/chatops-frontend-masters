@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "@netlify/functions": "^1.4.0"
+  },
+  "devDependencies": {
+    "@slack/types": "^2.8.0",
+    "@types/node": "^18.16.3"
   }
 }

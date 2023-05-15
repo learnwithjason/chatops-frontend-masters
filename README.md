@@ -23,3 +23,4 @@ TKTK
   - Send data from Notion to Slack
   - Send user input from Slack to Notion
 - Use a cron job to send updates at regular intervals
+- Add a context menu shortcut to have the bot remind someone of the process with links
