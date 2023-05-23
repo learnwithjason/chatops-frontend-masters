@@ -37,7 +37,7 @@ export function verifySlackRequest(request: HandlerEvent) {
 }
 
 export const blocks = {
-	section: ({ text }: SectionBlockArgs) => {
+	section: ({ text }: SectionBlockArgs): SlackBlockSection => {
 		return {
 			type: 'section',
 			text: {
@@ -52,7 +52,7 @@ export const blocks = {
 		placeholder,
 		initial_value = '',
 		hint = '',
-	}: InputBlockArgs) {
+	}: InputBlockArgs): SlackBlockInput {
 		return {
 			block_id: `${id}_block`,
 			type: 'input',
@@ -75,7 +75,12 @@ export const blocks = {
 			},
 		};
 	},
-	select({ id, label, placeholder, options }: SelectBlockArgs) {
+	select({
+		id,
+		label,
+		placeholder,
+		options,
+	}: SelectBlockArgs): SlackBlockInput {
 		return {
 			block_id: `${id}_block`,
 			type: 'input',
