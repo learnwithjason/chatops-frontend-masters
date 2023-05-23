@@ -76,6 +76,19 @@ async function handleInteractivity(payload: SlackModalPayload) {
 			});
 			break;
 
+		case 'start-food-fight-nudge':
+			const channel = payload.channel?.id;
+			const user_id = payload.user.id;
+			const thread_ts = payload.message.thread_ts ?? payload.message.ts;
+
+			await slackApi('chat.postMessage', {
+				channel,
+				thread_ts,
+				text: `Hey <@${user_id}>, an opinion like this one deserves a heated public debate. Run the \`/foodfight\` slash command in a main channel to start one!`,
+			});
+
+			break;
+
 		default:
 			console.log(`No handler defined for ${payload.view.callback_id}`);
 			return {
