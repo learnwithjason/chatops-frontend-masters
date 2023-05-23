@@ -111,3 +111,28 @@ export const blocks = {
 		};
 	},
 };
+
+export function modal({
+	trigger_id,
+	id,
+	title,
+	submit_text = 'Submit',
+	blocks,
+}: ModalArgs) {
+	return {
+		trigger_id,
+		view: {
+			type: 'modal',
+			callback_id: id,
+			title: {
+				type: 'plain_text',
+				text: title,
+			},
+			submit: {
+				type: 'plain_text',
+				text: submit_text,
+			},
+			blocks,
+		},
+	};
+}
