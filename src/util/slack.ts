@@ -35,3 +35,74 @@ export function verifySlackRequest(request: HandlerEvent) {
 	// we know the request is valid if our hash matches Slack’s
 	return `v0=${hash}` === signature;
 }
+
+export const blocks = {
+	section: ({ text }: SectionBlockArgs) => {
+		return {
+			type: 'section',
+			text: {
+				type: 'mrkdwn',
+				text,
+			},
+		};
+	},
+	input({
+		id,
+		label,
+		placeholder,
+		initial_value = '',
+		hint = '',
+	}: InputBlockArgs) {
+		return {
+			block_id: `${id}_block`,
+			type: 'input',
+			label: {
+				type: 'plain_text',
+				text: label,
+			},
+			element: {
+				action_id: id,
+				type: 'plain_text_input',
+				placeholder: {
+					type: 'plain_text',
+					text: placeholder,
+				},
+				initial_value,
+			},
+			hint: {
+				type: 'plain_text',
+				text: hint,
+			},
+		};
+	},
+	select({ id, label, placeholder, options }: SelectBlockArgs) {
+		return {
+			block_id: `${id}_block`,
+			type: 'input',
+			label: {
+				type: 'plain_text',
+				text: label,
+				emoji: true,
+			},
+			element: {
+				action_id: id,
+				type: 'static_select',
+				placeholder: {
+					type: 'plain_text',
+					text: placeholder,
+					emoji: true,
+				},
+				options: options.map(({ label, value }) => {
+					return {
+						text: {
+							type: 'plain_text',
+							text: label,
+							emoji: true,
+						},
+						value,
+					};
+				}),
+			},
+		};
+	},
+};
