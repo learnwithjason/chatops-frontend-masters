@@ -58,6 +58,38 @@ async function handleSlashCommand(payload: SlackSlashCommandPayload) {
 	};
 }
 
+async function handleInteractivity(payload: SlackModalPayload) {
+	const callback_id = payload.callback_id ?? payload.view.callback_id;
+
+	switch (callback_id) {
+		case 'foodfight-modal':
+			const data = payload.view.state.values;
+			const fields = {
+				opinion: data.opinion_block.opinion.value,
+				spiceLevel: data.spice_level_block.spice_level.selected_option.value,
+				submitter: payload.user.name,
+			};
+
+			await slackApi('chat.postMessage', {
+				channel: 'C0438E823SP',
+				text: `Oh dang, y’all! :eyes: <@${payload.user.id}> just started a food fight with a ${fields.spiceLevel} take:\n\n*${fields.opinion}*\n\n...discuss.`,
+			});
+			break;
+
+		default:
+			console.log(`No handler defined for ${payload.view.callback_id}`);
+			return {
+				statusCode: 400,
+				body: `No handler defined for ${payload.view.callback_id}`,
+			};
+	}
+
+	return {
+		statusCode: 200,
+		body: '',
+	};
+}
+
 export const handler: Handler = async (event) => {
 	const valid = verifySlackRequest(event);
 
@@ -77,6 +109,10 @@ export const handler: Handler = async (event) => {
 	}
 
 	// TODO handle interactivity (e.g. context commands, modals)
+	if (body.payload) {
+		const payload = JSON.parse(body.payload);
+		return handleInteractivity(payload);
+	}
 
 	return {
 		statusCode: 200,
