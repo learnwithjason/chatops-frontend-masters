@@ -43,3 +43,28 @@ export async function getNewItems(): Promise<NewItem[]> {
 
 	return openItems;
 }
+
+export async function saveItem(item: NewItem) {
+	const res = await notionApi('/pages', {
+		parent: {
+			database_id: process.env.NOTION_DATABASE_ID,
+		},
+		properties: {
+			opinion: {
+				title: [{ text: { content: item.opinion } }],
+			},
+			spiceLevel: {
+				select: {
+					name: item.spiceLevel,
+				},
+			},
+			submitter: {
+				rich_text: [{ text: { content: `@${item.submitter} on Slack` } }],
+			},
+		},
+	});
+
+	if (!res.ok) {
+		console.log(res);
+	}
+}
