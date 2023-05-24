@@ -24,7 +24,6 @@ type SlackPayload = SlackSlashCommandPayload | SlackInteractivityPayload;
 
 type SlackBlockSection = {
 	type: 'section';
-	block_id: string;
 	text: {
 		type: 'plain_text' | 'mrkdwn';
 		text: string;
@@ -38,12 +37,12 @@ type SlackBlockInput = {
 	label: {
 		type: 'plain_text';
 		text: string;
-		emoji: boolean;
+		emoji?: boolean;
 	};
 	hint?: {
 		type: 'plain_text';
 		text: string;
-		emoji: boolean;
+		emoji?: boolean;
 	};
 	optional?: boolean;
 	dispatch_action?: boolean;
@@ -53,8 +52,16 @@ type SlackBlockInput = {
 		placeholder?: {
 			type: string;
 			text: string;
-			emoji: boolean;
+			emoji?: boolean;
 		};
+		options?: {
+			text: {
+				type: 'plain_text';
+				text: string;
+				emoji?: boolean;
+			};
+			value: string;
+		}[];
 		initial_value?: string;
 		dispatch_action_config?: {
 			trigger_actions_on: string[];
@@ -86,6 +93,14 @@ type FoodOpinionModalState = {
 			};
 		};
 	};
+};
+
+type ModalArgs = {
+	trigger_id: string;
+	id: string;
+	title: string;
+	submit_text?: string;
+	blocks: SlackBlock[];
 };
 
 type SlackModalPayload = {
@@ -166,3 +181,32 @@ type SelectBlockArgs = {
 		value: string;
 	}[];
 } & BlockArgs;
+
+type NotionItem = {
+	properties: {
+		opinion: {
+			title: {
+				text: {
+					content: string;
+				};
+			}[];
+		};
+		spiceLevel: {
+			select: {
+				name: string;
+			};
+		};
+		Status: {
+			status: {
+				name: string;
+			};
+		};
+	};
+};
+
+type NewItem = {
+	opinion: string;
+	spiceLevel: string;
+	status?: string;
+	submitter?: string;
+};
