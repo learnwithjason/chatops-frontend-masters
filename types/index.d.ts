@@ -73,14 +73,14 @@ type SlackBlock = SlackBlockSection | SlackBlockInput;
 
 type FoodOpinionModalState = {
 	values: {
-		opinion_block: {
-			opinion: {
+		tasks_block: {
+			tasks: {
 				type: 'plain_text_input';
 				value: string;
 			};
 		};
-		spice_level_block: {
-			spice_level: {
+		priority_block: {
+			priority: {
 				type: 'static_select';
 				selected_option: {
 					text: {
@@ -184,14 +184,14 @@ type SelectBlockArgs = {
 
 type NotionItem = {
 	properties: {
-		opinion: {
+		tasks: {
 			title: {
 				text: {
 					content: string;
 				};
 			}[];
 		};
-		spiceLevel: {
+		priority: {
 			select: {
 				name: string;
 			};
@@ -205,8 +205,8 @@ type NotionItem = {
 };
 
 type NewItem = {
-	opinion: string;
-	spiceLevel: string;
+	tasks: string;
+	priority: string;
 	status?: string;
 	submitter?: string;
 };
